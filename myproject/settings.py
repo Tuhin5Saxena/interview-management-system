@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*q(yg6*#1dyqjxfzgtb2vw3%8m$le1_562kv4o-r8qm$bj1eiq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'interview',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR,'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,9 +75,13 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    'default':{
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'interview_db',
+        'USER': 'postgres',
+        'PASSWORD': 'sql123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -114,4 +120,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT=BASE_DIR/'staticfiles'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'saxenatuhin70@gmail.com'
+EMAIL_HOST_PASSWORD = 'aici enyy dnhc trav'
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
+
+LOGIN_URL='login'
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
