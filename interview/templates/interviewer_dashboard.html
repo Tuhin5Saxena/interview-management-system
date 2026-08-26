@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Interviewer Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #f8fafc;
+        font-family: Arial, sans-serif;
+      }
+
+      .dashboard-container {
+        max-width: 1100px;
+      }
+
+      .dashboard-title {
+        color: #1e293b;
+        font-weight: 700;
+      }
+
+      .dashboard-subtitle {
+        color: #64748b;
+      }
+
+      .interview-card {
+        border: none;
+        border-radius: 16px;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+        overflow: hidden;
+      }
+
+      .interview-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+      }
+
+      .interview-card .card-body {
+        padding: 25px;
+      }
+
+      .card-title {
+        color: #1e293b;
+        font-weight: 700;
+      }
+
+      .detail {
+        color: #475569;
+        margin-bottom: 10px;
+      }
+
+      .detail strong {
+        color: #1e293b;
+      }
+
+      .join-btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .feedback-btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .empty-box {
+        background: white;
+        border-radius: 15px;
+        padding: 45px 20px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+      }
+
+      .empty-box h4 {
+        color: #334155;
+      }
+
+      .empty-box p {
+        color: #64748b;
+      }
+
+      .logout-section {
+        margin-top: 45px;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container dashboard-container mt-5">
+      <!-- Dashboard Heading -->
+      <div class="text-center mb-5">
+        <h1 class="dashboard-title">Interviewer Dashboard</h1>
+
+        <p class="dashboard-subtitle">
+          View and manage your assigned interviews
+        </p>
+      </div>
+
+      <!-- Interviews Heading -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold mb-0">My Interviews</h3>
+
+        <span class="badge bg-primary fs-6">
+          {{ interviews|length }} Interview{{ interviews|length|pluralize }}
+        </span>
+      </div>
+
+      <!-- Interview Cards -->
+      <div class="row">
+        {% for interview in interviews %}
+
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card interview-card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title mb-4">👤 Candidate</h5>
+
+              <p class="detail">
+                <strong>Name:</strong>
+                {{ interview.candidate.name }}
+              </p>
+
+              <p class="detail">
+                <strong>Date:</strong>
+                {{ interview.interview_date }}
+              </p>
+
+              <p class="detail">
+                <strong>Time:</strong>
+                {{ interview.start_time }} - {{ interview.end_time }}
+              </p>
+
+              <p class="detail">
+                <strong>Mode:</strong>
+                {{ interview.mode }}
+              </p>
+
+              <p class="detail">
+                <strong>Status:</strong>
+
+                {% if interview.status == "Completed" %}
+
+                <span class="badge bg-success"> Completed </span>
+
+                {% elif interview.status == "Scheduled" %}
+
+                <span class="badge bg-primary"> Scheduled </span>
+
+                {% elif interview.status == "Ongoing" %}
+
+                <span class="badge bg-warning text-dark"> Ongoing </span>
+
+                {% else %}
+
+                <span class="badge bg-secondary"> {{ interview.status }} </span>
+
+                {% endif %}
+              </p>
+
+              <!-- Meeting Link -->
+              {% if interview.meeting_link %}
+
+              <a
+                href="{{ interview.meeting_link }}"
+                target="_blank"
+                class="btn btn-primary join-btn"
+              >
+                Join Interview
+              </a>
+
+              {% endif %}
+
+              <!-- Feedback -->
+              <a
+                href="{% url 'feedback' interview.id %}"
+                class="btn btn-outline-success feedback-btn"
+              >
+                Give Feedback
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {% empty %}
+
+        <!-- No Interviews -->
+        <div class="col-12">
+          <div class="empty-box">
+            <h4> No Interviews Assigned</h4>
+
+            <p class="mb-0">
+              You currently have no interviews assigned to you.
+            </p>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      <!-- Logout -->
+      <div class="text-center logout-section">
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger px-4">
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f8fafc;
+        margin: 0;
+        padding: 40px 20px;
+    }
+
+    .feedback-container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 25px;
+    }
+
+    .candidate {
+        background: #f1f5f9;
+        padding: 12px 15px;
+        border-radius: 6px;
+        margin-bottom: 25px;
+    }
+
+    form label {
+        display: block;
+        font-weight: bold;
+        margin-top: 18px;
+        margin-bottom: 7px;
+        color: #334155;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    button {
+        margin-top: 25px;
+        width: 100%;
+        padding: 11px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+</style>
+</head>
+<body>
+    <div class="feedback-container">
+    <h1>Interview Feedback</h1>
+
+    <p class="candidate">
+        Candidate: {{ interview.candidate.name }}
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Technical Rating:</label>
+        <input type="number" name="technical_rating" min="1" max="5">
+
+        <br><br>
+
+        <label>Communication Rating:</label>
+        <input type="number" name="communication_rating" min="1" max="5">
+
+        <br><br>
+
+        <label>Problem Solving Rating:</label>
+        <input type="number" name="problem_solving_rating" min="1" max="5">
+
+        <br><br>
+
+        <label>Overall Rating:</label>
+        <input type="number" name="overall_rating" min="1" max="5">
+
+        <br><br>
+
+        <label>Recommendation:</label>
+        <select name="recommendation">
+            <option>Hire</option>
+            <option>Reject</option>
+            <option>Hold</option>
+        </select>
+
+        <br><br>
+
+        <label>Comments:</label>
+        <textarea name="comments"></textarea>
+
+        <br><br>
+
+        <button type="submit">Submit Feedback</button>
+    </form>
+    </div>
+    
+</body>
+</html>

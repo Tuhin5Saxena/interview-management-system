@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Interview</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f1f5f9;
+        margin: 0;
+        padding: 30px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 25px;
+    }
+
+    form {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #334155;
+    }
+
+    select,
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+
+    select:focus,
+    input:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    button {
+        margin-top: 25px;
+        padding: 11px 20px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    p {
+        text-align: center;
+        color: #64748b;
+    }
+</style>
+</head>
+<body>
+    <h1>Schedule Interview</h1>
+    {%if error%}
+    <p>{{error}}</p>
+    {%endif%}
+    <p>Please select a candidate, interviewer, date and time.</p>
+    <h1>Schedule Interview</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Candidate:</label>
+        <select name="candidate">
+            <option>Select Candidate</option>
+            {%for candidate in candidates%}
+            <option value="{{candidate.id}}">{{candidate.name}}</option>
+            {%endfor%}
+        </select>
+
+        <br><br>
+
+        <label>Interviewer:</label>
+        <select name="interviewer">
+            <option>Select Interviewer</option>
+            {% for interviewer in interviewers %}
+            <option value="{{ interviewer.id }}">{{ interviewer.name }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label>Date:</label>
+        <input type="date" name="interview_date">
+
+        <br><br>
+
+        <label>Start Time:</label>
+        <input type="time" name="start_time">
+
+        <br><br>
+
+        <label>End Time:</label>
+        <input type="time" name="end_time">
+
+        <br><br>
+
+        <label>Mode:</label>
+        <select name="mode">
+            <option>Online</option>
+            <option>Offline</option>
+        </select>
+
+        <br><br>
+        <label>Meeting Link</label>
+        <input type="url" name="meeting_link">
+        <br><br>
+
+        <button type="submit">Schedule Interview</button>
+
+    </form>
+</body>
+</html>

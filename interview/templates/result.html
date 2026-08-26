@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Results</title>
+</head>
+
+<body>
+
+    <h1>My Interview Results</h1>
+
+    {% for feedback in feedbacks %}
+
+        <div>
+            <h3>Interview Result</h3>
+
+            <p>
+                <strong>Interviewer:</strong>
+                {{ feedback.interview.interviewer.name }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ feedback.interview.interview_date }}
+            </p>
+
+            <p>
+                <strong>Result:</strong>
+                {{ feedback.recommendation }}
+            </p>
+
+            <p>
+                <strong>Feedback:</strong>
+                {{ feedback.comments }}
+            </p>
+
+        </div>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Your result is not available yet.</p>
+
+    {% endfor %}
+
+</body>
+</html>

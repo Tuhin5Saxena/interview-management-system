@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f1f5f9;
+        margin: 0;
+        padding: 40px 20px;
+    }
+
+    h1,h2,p {
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 25px;
+    }
+
+    form {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #334155;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 18px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    button {
+        width: 100%;
+        padding: 11px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    a {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .links {
+        max-width: 400px;
+        margin: 20px auto;
+        text-align: center;
+        line-height: 2;
+    }
+
+    .error {
+        max-width: 400px;
+        margin: 0 auto 15px;
+        text-align: center;
+        color: red;
+    }
+</style>
+</head>
+<body>
+    <h1>Interview Management</h1>
+    <h2>Login</h2>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username:</label>
+        <input type="text" name="username">
+
+        <br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password">
+
+        <br><br>
+        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+
+        <br><br>
+
+        <button type="submit">Login</button>
+
+        <br><br>
+        <p>New User?</p>
+        <a href="{% url 'candidate_register' %}">Register as Candidate</a>
+        <br>
+        <a href="{% url 'interviewer_register' %}">Register as Interviewer</a>
+    </form>
+
+</body>
+</html>
