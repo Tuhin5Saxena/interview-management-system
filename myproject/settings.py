@@ -140,3 +140,7 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+CSRF_TRUSTED_ORIGINS=[
+    "https://interview-management-system-bl8v.onrender.com",
+]
