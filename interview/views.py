@@ -105,7 +105,7 @@ def login_view(request):
             elif user.groups.filter(name='Candidate').exists():
                 return redirect('/')
 
-            return redirect('/dashboard/')
+            return redirect('/')
 
         else:
             return render(
